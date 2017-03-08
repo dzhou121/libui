@@ -309,9 +309,10 @@ _UI_ENUM(uiWindowResizeEdge) {
 // TODO give a better name
 // TODO document the types of width and height
 _UI_EXTERN void uiAreaSetSize(uiArea *a, int width, int height);
-// TODO uiAreaQueueRedraw()
+_UI_EXTERN void uiAreaQueueRedraw(uiArea *a, double x, double y, double width, double height);
 _UI_EXTERN void uiAreaQueueRedrawAll(uiArea *a);
 _UI_EXTERN void uiAreaScrollTo(uiArea *a, double x, double y, double width, double height);
+_UI_EXTERN void uiAreaScrollRect(uiArea *a, double x, double y, double width, double height, double offsetX, double offsetY);
 // TODO document these can only be called within Mouse() handlers
 // TODO should these be allowed on scrolling areas?
 // TODO decide which mouse events should be accepted; Down is the only one guaranteed to work right now

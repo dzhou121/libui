@@ -265,7 +265,10 @@ mouseEvent(otherMouseUp)
 	ke.Up = up;
 
 	if (!fromKeycode([e keyCode], &ke))
-		return 0;
+    	return 0;
+
+    ke.Key = [[e charactersIgnoringModifiers] UTF8String][0];
+
 	return [self sendKeyEvent:&ke];
 }
 
@@ -399,12 +402,22 @@ void uiAreaQueueRedrawAll(uiArea *a)
 	[a->area setNeedsDisplay:YES];
 }
 
+void uiAreaQueueRedraw(uiArea *a, double x, double y, double width, double height)
+{
+	[a->area setNeedsDisplayInRect:NSMakeRect(x, y, width, height)];
+}
+
 void uiAreaScrollTo(uiArea *a, double x, double y, double width, double height)
 {
 	if (!a->scrolling)
 		userbug("You cannot call uiAreaScrollTo() on a non-scrolling uiArea. (area: %p)", a);
 	[a->area scrollRectToVisible:NSMakeRect(x, y, width, height)];
 	// don't worry about the return value; it just says whether scrolling was needed
+}
+
+void uiAreaScrollRect(uiArea *a, double x, double y, double width, double height, double offsetX, double offsetY)
+{
+    [a->area scrollRect:NSMakeRect(x, y, width, height) by:NSMakeSize(offsetX, offsetY)];
 }
 
 void uiAreaBeginUserWindowMove(uiArea *a)
