@@ -123,6 +123,7 @@ const char *uiInit(uiInitOptions *o)
 		// always do this so we always have an application menu
 		appDelegate().menuManager = [[menuManager new] autorelease];
 		[realNSApp() setMainMenu:[appDelegate().menuManager makeMenubar]];
+        [realNSApp() activateIgnoringOtherApps:YES];
 
 		setupFontPanel();
 	}

@@ -115,7 +115,7 @@ _UI_EXTERN void uiDarwinControlChildVisibilityChanged(uiDarwinControl *);
 		if (superview == nil) \
 			[type(c)->handlefield removeFromSuperview]; \
 		else \
-			[superview addSubview:type(c)->handlefield]; \
+			[superview addSubview:type(c)->handlefield positioned:NSWindowAbove relativeTo:nil]; \
 	}
 #define uiDarwinControlDefaultHugsTrailingEdge(type, handlefield) \
 	static BOOL type ## HugsTrailingEdge(uiDarwinControl *c) \

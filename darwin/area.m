@@ -392,9 +392,21 @@ int sendAreaEvents(NSEvent *e)
 
 void uiAreaSetSize(uiArea *a, int width, int height)
 {
-	if (!a->scrolling)
-		userbug("You cannot call uiAreaSetSize() on a non-scrolling uiArea. (area: %p)", a);
-	[a->area setScrollingSize:NSMakeSize(width, height)];
+	// if (!a->scrolling)
+    //		userbug("You cannot call uiAreaSetSize() on a non-scrolling uiArea. (area: %p)", a);
+	[a->area setFrameSize:NSMakeSize(width, height)];
+}
+
+void uiAreaSetPosition(uiArea *a, int x, int y)
+{
+	// if (!a->scrolling)
+    //		userbug("You cannot call uiAreaSetSize() on a non-scrolling uiArea. (area: %p)", a);
+	[a->area setFrameOrigin:NSMakePoint(x, y)];
+}
+
+void uiAreaSetBackground(uiArea *a, uiDrawBrush *b)
+{
+    [a->area.layer setBackgroundColor:[[NSColor colorWithDeviceRed:b->R green:b->G blue:b->B alpha:b->A] CGColor]];
 }
 
 void uiAreaQueueRedrawAll(uiArea *a)
@@ -417,7 +429,17 @@ void uiAreaScrollTo(uiArea *a, double x, double y, double width, double height)
 
 void uiAreaScrollRect(uiArea *a, double x, double y, double width, double height, double offsetX, double offsetY)
 {
-    [a->area scrollRect:NSMakeRect(x, y, width, height) by:NSMakeSize(offsetX, offsetY)];
+     [a->area scrollRect:NSMakeRect(x, y, width, height) by:NSMakeSize(offsetX, offsetY)];
+     //NSSize size = a->area.frame.size;
+     //size_t bitsPerComponent = 8;
+     //size_t bytesPerPixel = 4;
+     //size_t bytesPerRow = size.width * bytesPerPixel;  
+     //CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+     //CGContextRef ctx = CGBitmapContextCreate(nil, size.width, size.height, 8, bytesPerRow, colorSpace, kCGImageAlphaPremultipliedLast);
+     //[a->area.layer renderInContext:ctx];
+     //NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithCGImage:CGBitmapContextCreateImage(ctx)];
+     //[a->area.layer drawInContext:ctx];
+     // [a->area cacheDisplayInRect:NSMakeRect(x + offsetX, y + offsetY, width, height) toBitmapImageRep:bitmap];
 }
 
 void uiAreaBeginUserWindowMove(uiArea *a)
@@ -454,6 +476,9 @@ uiArea *uiNewArea(uiAreaHandler *ah)
 	a->scrolling = NO;
 
 	a->area = [[areaView alloc] initWithFrame:NSZeroRect area:a];
+
+    //[a->area setLayer:[CALayer layer]];
+    [a->area setWantsLayer:YES];
 
 	a->view = a->area;
 

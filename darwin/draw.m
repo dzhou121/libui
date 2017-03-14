@@ -450,5 +450,6 @@ void uiDrawRestore(uiDrawContext *c)
 
 void uiDrawText(uiDrawContext *c, double x, double y, uiDrawTextLayout *layout)
 {
-	doDrawText(c->c, c->height, x, y, layout);
+    CGContextSetShouldSmoothFonts(c->c, true);
+ 	doDrawText(c->c, c->height, x, y, layout);
 }

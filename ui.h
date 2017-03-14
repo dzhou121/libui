@@ -104,7 +104,7 @@ _UI_EXTERN void uiWindowContentSize(uiWindow *w, int *width, int *height);
 _UI_EXTERN void uiWindowSetContentSize(uiWindow *w, int width, int height);
 _UI_EXTERN int uiWindowFullscreen(uiWindow *w);
 _UI_EXTERN void uiWindowSetFullscreen(uiWindow *w, int fullscreen);
-_UI_EXTERN void uiWindowOnContentSizeChanged(uiWindow *w, void (*f)(uiWindow *, void *), void *data);
+_UI_EXTERN void uiWindowOnContentSizeChanged(uiWindow *w, int (*f)(uiWindow *, void *data), void *data);
 _UI_EXTERN void uiWindowOnClosing(uiWindow *w, int (*f)(uiWindow *w, void *data), void *data);
 _UI_EXTERN int uiWindowBorderless(uiWindow *w);
 _UI_EXTERN void uiWindowSetBorderless(uiWindow *w, int borderless);
@@ -126,6 +126,9 @@ _UI_EXTERN void uiBoxAppend(uiBox *b, uiControl *child, int stretchy);
 _UI_EXTERN void uiBoxDelete(uiBox *b, int index);
 _UI_EXTERN int uiBoxPadded(uiBox *b);
 _UI_EXTERN void uiBoxSetPadded(uiBox *b, int padded);
+_UI_EXTERN void uiBoxSetSize(uiBox *b, int width, int height);
+_UI_EXTERN void uiBoxSetPosition(uiBox *b, int x, int y);
+_UI_EXTERN void uiBoxSetShadow(uiBox *box, int x, int y, double r, double g, double b, double a, double radius);
 _UI_EXTERN uiBox *uiNewHorizontalBox(void);
 _UI_EXTERN uiBox *uiNewVerticalBox(void);
 
@@ -309,6 +312,7 @@ _UI_ENUM(uiWindowResizeEdge) {
 // TODO give a better name
 // TODO document the types of width and height
 _UI_EXTERN void uiAreaSetSize(uiArea *a, int width, int height);
+_UI_EXTERN void uiAreaSetPosition(uiArea *a, int x, int y);
 _UI_EXTERN void uiAreaQueueRedraw(uiArea *a, double x, double y, double width, double height);
 _UI_EXTERN void uiAreaQueueRedrawAll(uiArea *a);
 _UI_EXTERN void uiAreaScrollTo(uiArea *a, double x, double y, double width, double height);
@@ -568,6 +572,11 @@ _UI_ENUM(uiModifiers) {
 	uiModifierSuper = 1 << 3,
 };
 
+_UI_EXTERN void uiAreaSetBackground(uiArea *a, uiDrawBrush *b);
+_UI_EXTERN void uiWindowSetBackground(uiWindow *w, uiDrawBrush *b);
+_UI_EXTERN void uiLabelSetColor(uiLabel *l, uiDrawBrush *b);
+_UI_EXTERN void uiLabelSetBackground(uiLabel *l, uiDrawBrush *b);
+_UI_EXTERN void uiLabelSetFont(uiLabel *l, uiDrawTextFont *font);
 // TODO document drag captures
 struct uiAreaMouseEvent {
 	// TODO document what these mean for scrolling areas

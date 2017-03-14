@@ -292,7 +292,7 @@ void uiWindowSetFullscreen(uiWindow *w, int fullscreen)
 		[w->window setStyleMask:NSBorderlessWindowMask];
 }
 
-void uiWindowOnContentSizeChanged(uiWindow *w, void (*f)(uiWindow *, void *), void *data)
+void uiWindowOnContentSizeChanged(uiWindow *w, int (*f)(uiWindow *, void *), void *data)
 {
 	w->onContentSizeChanged = f;
 	w->onContentSizeChangedData = data;
@@ -362,9 +362,10 @@ static int defaultOnClosing(uiWindow *w, void *data)
 	return 0;
 }
 
-static void defaultOnPositionContentSizeChanged(uiWindow *w, void *data)
+static int defaultOnPositionContentSizeChanged(uiWindow *w, void *data)
 {
 	// do nothing
+    return 0;
 }
 
 uiWindow *uiNewWindow(const char *title, int width, int height, int hasMenubar)
@@ -404,4 +405,9 @@ uiWindow *windowFromNSWindow(NSWindow *w)
 	if (windowDelegate == nil)		// no windows were created yet; we're called with some OS X-provided window
 		return NULL;
 	return [windowDelegate lookupWindow:w];
+}
+
+void uiWindowSetBackground(uiWindow *w, uiDrawBrush *b)
+{
+    [w->window setBackgroundColor:[NSColor colorWithCalibratedRed:b->R green:b->G blue:b->B alpha:b->A]];
 }

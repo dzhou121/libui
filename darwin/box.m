@@ -95,6 +95,11 @@ struct uiBox {
 	return self;
 }
 
+- (BOOL)isFlipped
+{
+	return YES;
+}
+
 - (void)onDestroy
 {
 	boxChild *bc;
@@ -150,6 +155,8 @@ struct uiBox {
 
 - (void)establishOurConstraints
 {
+	if (!self->vertical)
+        return;
 	boxChild *bc;
 	CGFloat padding;
 	NSView *prev;
@@ -268,6 +275,7 @@ struct uiBox {
 
 	uiControlSetParent(bc.c, uiControl(self->b));
 	uiDarwinControlSetSuperview(uiDarwinControl(bc.c), self);
+    // [self addSubview:type(c)->handlefield positioned:NSWindowAbove];
 	uiDarwinControlSyncEnableState(uiDarwinControl(bc.c), uiControlEnabledToUser(uiControl(self->b)));
 
 	// if a control is stretchy, it should not hug in the primary direction
@@ -455,6 +463,8 @@ static uiBox *finishNewBox(BOOL vertical)
 
 	b->view = [[boxView alloc] initWithVertical:vertical b:b];
 
+    [b->view setWantsLayer:YES];
+
 	return b;
 }
 
@@ -466,4 +476,26 @@ uiBox *uiNewHorizontalBox(void)
 uiBox *uiNewVerticalBox(void)
 {
 	return finishNewBox(YES);
+}
+
+void uiBoxSetSize(uiBox *b, int width, int height)
+{
+	[b->view setFrameSize:NSMakeSize(width, height)];
+}
+
+void uiBoxSetPosition(uiBox *b, int x, int y)
+{
+	[b->view setFrameOrigin:NSMakePoint(x, y)];
+}
+
+void uiBoxSetShadow(uiBox *box, int x, int y, double r, double g, double b, double a, double radius)
+{
+    NSShadow *dropShadow = [[NSShadow alloc] init];
+    [dropShadow setShadowColor:[NSColor colorWithDeviceRed:r green:g blue:b alpha:a]];
+    [dropShadow setShadowOffset:NSMakeSize(x, y)];
+    [dropShadow setShadowBlurRadius:radius];
+
+    [box->view setShadow: dropShadow];
+
+    [dropShadow release];
 }

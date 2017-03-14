@@ -2,6 +2,7 @@
 #define MAC_OS_X_VERSION_MIN_REQUIRED MAC_OS_X_VERSION_10_8
 #define MAC_OS_X_VERSION_MAX_ALLOWED MAC_OS_X_VERSION_10_8
 #import <Cocoa/Cocoa.h>
+#import <QuartzCore/QuartzCore.h>
 #import "../ui.h"
 #import "../ui_darwin.h"
 #import "../common/uipriv.h"
@@ -136,7 +137,7 @@ extern void scrollViewSetScrolling(NSScrollView *sv, struct scrollViewData *d, B
 extern void scrollViewFreeData(NSScrollView *sv, struct scrollViewData *d);
 
 // label.m
-extern NSTextField *newLabel(NSString *str);
+extern NSTextView *newLabel(NSString *str);
 
 // image.m
 extern NSImage *imageImage(uiImage *);
