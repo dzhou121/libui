@@ -637,6 +637,24 @@ void uiDrawTextLayoutSetColor(uiDrawTextLayout *layout, int startChar, int endCh
 	CGColorSpaceRef colorspace;
 	CGFloat components[4];
 	CGColorRef color;
+    CFRange range;
+    CFIndex total_length;
+    CFIndex length;
+    CFIndex start;
+    
+
+    total_length = CFAttributedStringGetLength(layout->mas);
+    length = endChar - startChar;
+    if (total_length < length) {
+        range.length = total_length;
+    } else {
+        range.length = length;
+    }
+    start = startChar;
+    if (start >= total_length) {
+        start = total_length - 1;
+    }
+    range.location = start;
 
 	// for consistency with windows, use sRGB
 	colorspace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
@@ -648,7 +666,8 @@ void uiDrawTextLayoutSetColor(uiDrawTextLayout *layout, int startChar, int endCh
 	CGColorSpaceRelease(colorspace);
 
 	CFAttributedStringSetAttribute(layout->mas,
-		rangeToCFRange(),
+		// rangeToCFRange(),
+        range,
 		kCTForegroundColorAttributeName,
 		color);
 	CGColorRelease(color);		// TODO safe?

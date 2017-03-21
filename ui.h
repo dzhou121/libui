@@ -316,7 +316,6 @@ _UI_EXTERN void uiAreaSetPosition(uiArea *a, int x, int y);
 _UI_EXTERN void uiAreaQueueRedraw(uiArea *a, double x, double y, double width, double height);
 _UI_EXTERN void uiAreaQueueRedrawAll(uiArea *a);
 _UI_EXTERN void uiAreaScrollTo(uiArea *a, double x, double y, double width, double height);
-_UI_EXTERN void uiAreaScrollRect(uiArea *a, double x, double y, double width, double height, double offsetX, double offsetY);
 // TODO document these can only be called within Mouse() handlers
 // TODO should these be allowed on scrolling areas?
 // TODO decide which mouse events should be accepted; Down is the only one guaranteed to work right now
@@ -572,11 +571,6 @@ _UI_ENUM(uiModifiers) {
 	uiModifierSuper = 1 << 3,
 };
 
-_UI_EXTERN void uiAreaSetBackground(uiArea *a, uiDrawBrush *b);
-_UI_EXTERN void uiWindowSetBackground(uiWindow *w, uiDrawBrush *b);
-_UI_EXTERN void uiLabelSetColor(uiLabel *l, uiDrawBrush *b);
-_UI_EXTERN void uiLabelSetBackground(uiLabel *l, uiDrawBrush *b);
-_UI_EXTERN void uiLabelSetFont(uiLabel *l, uiDrawTextFont *font);
 // TODO document drag captures
 struct uiAreaMouseEvent {
 	// TODO document what these mean for scrolling areas
