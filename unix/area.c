@@ -494,16 +494,29 @@ uiUnixControlAllDefaults(uiArea)
 
 void uiAreaSetSize(uiArea *a, int width, int height)
 {
-	if (!a->scrolling)
-		userbug("You cannot call uiAreaSetSize() on a non-scrolling uiArea. (area: %p)", a);
-	a->scrollWidth = width;
-	a->scrollHeight = height;
-	gtk_widget_queue_resize(a->areaWidget);
+	// a->scrollWidth = width;
+	// a->scrollHeight = height;
+	// gtk_widget_queue_resize(a->areaWidget);
+    gtk_widget_set_size_request(a->areaWidget, width, height);
 }
 
 void uiAreaQueueRedrawAll(uiArea *a)
 {
 	gtk_widget_queue_draw(a->areaWidget);
+}
+
+void uiAreaQueueRedraw(uiArea *a, double x, double y, double width, double height)
+{
+	gtk_widget_queue_draw_area(a->areaWidget, gint(x), gint(y), gint(width), gint(height));
+}
+
+void uiAreaSetPosition(uiArea *a, int x, int y)
+{
+	parent = uiControlParent(uiControl(a->areaWidget));
+    if (parent == NULL) {
+        return
+    }
+    gtk_fixed_move(GTK_FIXED(parent), a->areaWidget, x, y);
 }
 
 void uiAreaScrollTo(uiArea *a, double x, double y, double width, double height)

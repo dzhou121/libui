@@ -254,7 +254,7 @@ uiWindow *uiNewWindow(const char *title, int width, int height, int hasMenubar)
 		gtk_container_add(w->vboxContainer, w->menubar);
 	}
 
-	w->childHolderWidget = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+	w->childHolderWidget = gtk_fixed_new();
 	w->childHolderContainer = GTK_CONTAINER(w->childHolderWidget);
 	gtk_widget_set_hexpand(w->childHolderWidget, TRUE);
 	gtk_widget_set_halign(w->childHolderWidget, GTK_ALIGN_FILL);

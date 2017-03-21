@@ -55,33 +55,35 @@ void uiBoxAppend(uiBox *b, uiControl *c, int stretchy)
 	bc.c = c;
 	bc.stretchy = stretchy;
 	widget = GTK_WIDGET(uiControlHandle(bc.c));
-	bc.oldhexpand = gtk_widget_get_hexpand(widget);
-	bc.oldhalign = gtk_widget_get_halign(widget);
-	bc.oldvexpand = gtk_widget_get_vexpand(widget);
-	bc.oldvalign = gtk_widget_get_valign(widget);
 
-	if (bc.stretchy) {
-		if (b->vertical) {
-			gtk_widget_set_vexpand(widget, TRUE);
-			gtk_widget_set_valign(widget, GTK_ALIGN_FILL);
-		} else {
-			gtk_widget_set_hexpand(widget, TRUE);
-			gtk_widget_set_halign(widget, GTK_ALIGN_FILL);
-		}
-		gtk_size_group_add_widget(b->stretchygroup, widget);
-	} else
-		if (b->vertical)
-			gtk_widget_set_vexpand(widget, FALSE);
-		else
-			gtk_widget_set_hexpand(widget, FALSE);
-	// and make them fill the opposite direction
-	if (b->vertical) {
-		gtk_widget_set_hexpand(widget, TRUE);
-		gtk_widget_set_halign(widget, GTK_ALIGN_FILL);
-	} else {
-		gtk_widget_set_vexpand(widget, TRUE);
-		gtk_widget_set_valign(widget, GTK_ALIGN_FILL);
-	}
+    gtk_fixed_put(GTK_FIXED(b->widget), GtkWidget(c), 0, 0);
+	// bc.oldhexpand = gtk_widget_get_hexpand(widget);
+	// bc.oldhalign = gtk_widget_get_halign(widget);
+	// bc.oldvexpand = gtk_widget_get_vexpand(widget);
+	// bc.oldvalign = gtk_widget_get_valign(widget);
+
+	// if (bc.stretchy) {
+	// 	if (b->vertical) {
+	// 		gtk_widget_set_vexpand(widget, TRUE);
+	// 		gtk_widget_set_valign(widget, GTK_ALIGN_FILL);
+	// 	} else {
+	// 		gtk_widget_set_hexpand(widget, TRUE);
+	// 		gtk_widget_set_halign(widget, GTK_ALIGN_FILL);
+	// 	}
+	// 	gtk_size_group_add_widget(b->stretchygroup, widget);
+	// } else
+	// 	if (b->vertical)
+	// 		gtk_widget_set_vexpand(widget, FALSE);
+	// 	else
+	// 		gtk_widget_set_hexpand(widget, FALSE);
+	// // and make them fill the opposite direction
+	// if (b->vertical) {
+	// 	gtk_widget_set_hexpand(widget, TRUE);
+	// 	gtk_widget_set_halign(widget, GTK_ALIGN_FILL);
+	// } else {
+	// 	gtk_widget_set_vexpand(widget, TRUE);
+	// 	gtk_widget_set_valign(widget, GTK_ALIGN_FILL);
+	// }
 
 	uiControlSetParent(bc.c, uiControl(b));
 	uiUnixControlSetContainer(uiUnixControl(bc.c), b->container, FALSE);
@@ -126,15 +128,27 @@ void uiBoxSetPadded(uiBox *b, int padded)
 		gtk_box_set_spacing(b->box, 0);
 }
 
+void uiBoxSetSize(uiBox *b, int width, int height)
+{
+}
+
+void uiBoxSetPosition(uiBox *b, int x, int y)
+{
+}
+
+void uiBoxSetShadow(uiBox *box, int x, int y, double r, double g, double b, double a, double radius)
+{
+}
+
 static uiBox *finishNewBox(GtkOrientation orientation)
 {
 	uiBox *b;
 
 	uiUnixNewControl(uiBox, b);
 
-	b->widget = gtk_box_new(orientation, 0);
+	b->widget = gtk_fixed_new();
 	b->container = GTK_CONTAINER(b->widget);
-	b->box = GTK_BOX(b->widget);
+	// b->box = GTK_BOX(b->widget);
 
 	b->vertical = orientation == GTK_ORIENTATION_VERTICAL;
 
