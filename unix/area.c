@@ -512,9 +512,10 @@ void uiAreaQueueRedraw(uiArea *a, double x, double y, double width, double heigh
 
 void uiAreaSetPosition(uiArea *a, int x, int y)
 {
+    uiControl *parent;
 	parent = uiControlParent(uiControl(a->areaWidget));
     if (parent == NULL) {
-        return
+        return;
     }
     gtk_fixed_move(GTK_FIXED(parent), a->areaWidget, x, y);
 }
