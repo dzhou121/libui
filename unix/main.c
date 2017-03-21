@@ -15,8 +15,8 @@ const char *uiInit(uiInitOptions *o)
 	// 	return msg;
 	// }
     gtk_init(NULL, NULL);
-	initAlloc();
-	loadFutures();
+	// initAlloc();
+	// loadFutures();
 	return NULL;
 }
 
