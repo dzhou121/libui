@@ -9,11 +9,12 @@ const char *uiInit(uiInitOptions *o)
 	const char *msg;
 
 	options = *o;
-	if (gtk_init_with_args(NULL, NULL, NULL, NULL, NULL, &err) == FALSE) {
-		msg = g_strdup(err->message);
-		g_error_free(err);
-		return msg;
-	}
+	// if (gtk_init_with_args(NULL, NULL, NULL, NULL, NULL, &err) == FALSE) {
+	// 	msg = g_strdup(err->message);
+	// 	g_error_free(err);
+	// 	return msg;
+	// }
+    gtk_init(NULL, NULL);
 	initAlloc();
 	loadFutures();
 	return NULL;
