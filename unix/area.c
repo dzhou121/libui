@@ -507,7 +507,7 @@ void uiAreaQueueRedrawAll(uiArea *a)
 
 void uiAreaQueueRedraw(uiArea *a, double x, double y, double width, double height)
 {
-	gtk_widget_queue_draw_area(a->areaWidget, gint(x), gint(y), gint(width), gint(height));
+	gtk_widget_queue_draw_area(a->areaWidget, int(x), int(y), int(width), int(height));
 }
 
 void uiAreaSetPosition(uiArea *a, int x, int y)
