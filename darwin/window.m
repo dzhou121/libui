@@ -292,7 +292,7 @@ void uiWindowSetFullscreen(uiWindow *w, int fullscreen)
 		[w->window setStyleMask:NSBorderlessWindowMask];
 }
 
-void uiWindowOnContentSizeChanged(uiWindow *w, int (*f)(uiWindow *, void *), void *data)
+void uiWindowOnContentSizeChanged(uiWindow *w, void (*f)(uiWindow *, void *), void *data)
 {
 	w->onContentSizeChanged = f;
 	w->onContentSizeChangedData = data;
@@ -362,10 +362,9 @@ static int defaultOnClosing(uiWindow *w, void *data)
 	return 0;
 }
 
-static int defaultOnPositionContentSizeChanged(uiWindow *w, void *data)
+static void defaultOnPositionContentSizeChanged(uiWindow *w, void *data)
 {
 	// do nothing
-    return 0;
 }
 
 uiWindow *uiNewWindow(const char *title, int width, int height, int hasMenubar)

@@ -104,7 +104,7 @@ _UI_EXTERN void uiWindowContentSize(uiWindow *w, int *width, int *height);
 _UI_EXTERN void uiWindowSetContentSize(uiWindow *w, int width, int height);
 _UI_EXTERN int uiWindowFullscreen(uiWindow *w);
 _UI_EXTERN void uiWindowSetFullscreen(uiWindow *w, int fullscreen);
-_UI_EXTERN void uiWindowOnContentSizeChanged(uiWindow *w, int (*f)(uiWindow *, void *data), void *data);
+_UI_EXTERN void uiWindowOnContentSizeChanged(uiWindow *w, void (*f)(uiWindow *, void *data), void *data);
 _UI_EXTERN void uiWindowOnClosing(uiWindow *w, int (*f)(uiWindow *w, void *data), void *data);
 _UI_EXTERN int uiWindowBorderless(uiWindow *w);
 _UI_EXTERN void uiWindowSetBorderless(uiWindow *w, int borderless);
