@@ -414,6 +414,7 @@ static int areaKeyEvent(uiArea *a, int up, GdkEventKey *e)
 	return 0;
 
 keyFound:
+	ke.Key = e->string[0];
 	return (*(a->ah->KeyEvent))(a->ah, a, &ke);
 }
 
@@ -512,8 +513,8 @@ void uiAreaQueueRedraw(uiArea *a, double x, double y, double width, double heigh
 
 void uiAreaSetPosition(uiArea *a, int x, int y)
 {
-    uiControl *parent;
-	parent = uiControlParent(uiControl(a->areaWidget));
+    GtkWidget *parent;
+        parent = gtk_widget_get_parent(a->areaWidget);
     if (parent == NULL) {
         return;
     }

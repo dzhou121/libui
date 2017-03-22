@@ -267,7 +267,7 @@ uiWindow *uiNewWindow(const char *title, int width, int height, int hasMenubar)
 
 	// and connect our events
 	g_signal_connect(w->widget, "delete-event", G_CALLBACK(onClosing), w);
-	g_signal_connect(w->childHolderWidget, "size-allocate", G_CALLBACK(onSizeAllocate), w);
+	g_signal_connect(w->widget, "size-allocate", G_CALLBACK(onSizeAllocate), w);
 	uiWindowOnClosing(w, defaultOnClosing, NULL);
 	uiWindowOnContentSizeChanged(w, defaultOnPositionContentSizeChanged, NULL);
 
