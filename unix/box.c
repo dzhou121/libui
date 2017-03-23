@@ -56,7 +56,7 @@ void uiBoxAppend(uiBox *b, uiControl *c, int stretchy)
 	bc.stretchy = stretchy;
 	widget = GTK_WIDGET(uiControlHandle(bc.c));
 
-    //gtk_fixed_put(GTK_FIXED(b->widget), widget, 0, 0);
+    gtk_fixed_put(GTK_FIXED(b->widget), widget, 0, 0);
 	// bc.oldhexpand = gtk_widget_get_hexpand(widget);
 	// bc.oldhalign = gtk_widget_get_halign(widget);
 	// bc.oldvexpand = gtk_widget_get_vexpand(widget);
@@ -86,7 +86,7 @@ void uiBoxAppend(uiBox *b, uiControl *c, int stretchy)
 	// }
 
 	uiControlSetParent(bc.c, uiControl(b));
-	uiUnixControlSetContainer(uiUnixControl(bc.c), b->container, FALSE);
+	// uiUnixControlSetContainer(uiUnixControl(bc.c), b->container, FALSE);
 	g_array_append_val(b->controls, bc);
 }
 
