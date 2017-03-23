@@ -139,7 +139,7 @@ void uiBoxSetPosition(uiBox *b, int x, int y)
     if (parent == NULL) {
         return;
     }
-    gtk_fixed_move(GTK_FIXED(parent), b->widget, x, y);
+    gtk_fixed_move(GTK_FIXED(parent), GTK_WIDGET(b->widget), x, y);
 }
 
 void uiBoxSetShadow(uiBox *box, int x, int y, double r, double g, double b, double a, double radius)
