@@ -54,9 +54,14 @@ void uiBoxAppend(uiBox *b, uiControl *c, int stretchy)
 
 	bc.c = c;
 	bc.stretchy = stretchy;
-	widget = GTK_WIDGET(uiControlHandle(bc.c));
+	widget = GTK_WIDGET(uiControlHandle(c));
+        //gtk_fixed_put(GTK_FIXED(b->widget), widget, 0, 0);
+	//gtk_widget_set_parent(widget, b->widget);
 
-    // gtk_fixed_put(GTK_FIXED(b->widget), widget, 0, 0);
+	uiControlSetParent(bc.c, uiControl(b));
+	uiUnixControlSetContainer(uiUnixControl(bc.c), b->container, FALSE);
+	g_array_append_val(b->controls, bc);
+
 	// bc.oldhexpand = gtk_widget_get_hexpand(widget);
 	// bc.oldhalign = gtk_widget_get_halign(widget);
 	// bc.oldvexpand = gtk_widget_get_vexpand(widget);
@@ -84,10 +89,6 @@ void uiBoxAppend(uiBox *b, uiControl *c, int stretchy)
 	// 	gtk_widget_set_vexpand(widget, TRUE);
 	// 	gtk_widget_set_valign(widget, GTK_ALIGN_FILL);
 	// }
-
-	uiControlSetParent(bc.c, uiControl(b));
-	uiUnixControlSetContainer(uiUnixControl(bc.c), b->container, FALSE);
-	g_array_append_val(b->controls, bc);
 }
 
 void uiBoxDelete(uiBox *b, int index)
