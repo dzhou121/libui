@@ -134,6 +134,12 @@ void uiBoxSetSize(uiBox *b, int width, int height)
 
 void uiBoxSetPosition(uiBox *b, int x, int y)
 {
+    GtkWidget *parent;
+    parent = gtk_widget_get_parent(b->widget);
+    if (parent == NULL) {
+        return;
+    }
+    gtk_fixed_move(GTK_FIXED(parent), b->widget, x, y);
 }
 
 void uiBoxSetShadow(uiBox *box, int x, int y, double r, double g, double b, double a, double radius)
