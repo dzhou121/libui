@@ -414,7 +414,9 @@ static int areaKeyEvent(uiArea *a, int up, GdkEventKey *e)
 	return 0;
 
 keyFound:
-	ke.Key = e->string[0];
+    if (ke.Modifiers & uiModifierShift > 0) {
+	    ke.Key = e->string[0];
+    }
 	return (*(a->ah->KeyEvent))(a->ah, a, &ke);
 }
 
