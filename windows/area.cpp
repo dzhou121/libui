@@ -98,8 +98,8 @@ void uiAreaQueueRedrawAll(uiArea *a)
 void uiAreaQueueRedraw(uiArea *a, double x, double y, double width, double height)
 {
 	RECT r;
-    r.x = x;
-    r.y = y;
+    r.left = x;
+    r.top = y;
     r.right = x + width;
     r.bottom = y + height;
 	invalidateRect(a->hwnd, &r, FALSE);
