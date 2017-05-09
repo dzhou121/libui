@@ -18,6 +18,11 @@ struct uiArea {
 	int hwheelCarry;
 	int vwheelCarry;
 
+    int x;
+    int y;
+    int width;
+    int height;
+
 	clickCounter cc;
 	BOOL capturing;
 

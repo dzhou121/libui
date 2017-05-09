@@ -243,10 +243,14 @@ uiDrawTextFont *uiDrawLoadClosestFont(const uiDrawTextFontDescriptor *desc)
 
 	wfamily = toUTF16(desc->Family);
 	hr = collection->FindFamilyName(wfamily, &index, &exists);
-	if (hr != S_OK)
+	if (hr != S_OK) {
 		logHRESULT(L"error finding font family", hr);
-	if (!exists)
-		implbug("LONGTERM family not found in uiDrawLoadClosestFont()", hr);
+        index = 0;
+    }
+	if (!exists) {
+		// implbug("LONGTERM family not found in uiDrawLoadClosestFont()", hr);
+        index = 0;
+    }
 	hr = collection->GetFontFamily(index, &family);
 	if (hr != S_OK)
 		logHRESULT(L"error loading font family", hr);
@@ -306,7 +310,7 @@ void uiDrawTextFontDescribe(uiDrawTextFont *font, uiDrawTextFontDescriptor *desc
 // TODO make points here about how DIPs in DirectWrite == DIPs in Direct2D; if not, figure out what they really are? for the width and layout functions later
 static double scaleUnits(double what, double designUnitsPerEm, double size)
 {
-	return (what / designUnitsPerEm) * (size * (96.0 / 72.0));
+	return (what / designUnitsPerEm) * (size );
 }
 
 void uiDrawTextFontGetMetrics(uiDrawTextFont *font, uiDrawTextFontMetrics *metrics)
@@ -359,7 +363,7 @@ uiDrawTextLayout *uiDrawNewTextLayout(const char *text, uiDrawTextFont *defaultF
 		defaultFont->f->GetStretch(),
 		// typographic points are 1/72 inch; this parameter is 1/96 inch
 		// fortunately Microsoft does this too, in https://msdn.microsoft.com/en-us/library/windows/desktop/dd371554%28v=vs.85%29.aspx
-		defaultFont->size * (96.0 / 72.0),
+		defaultFont->size,
 		// see http://stackoverflow.com/questions/28397971/idwritefactorycreatetextformat-failing and https://msdn.microsoft.com/en-us/library/windows/desktop/dd368203.aspx
 		// TODO use the current locale again?
 		L"",
