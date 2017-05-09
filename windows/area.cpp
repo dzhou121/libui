@@ -105,6 +105,10 @@ void uiAreaQueueRedraw(uiArea *a, double x, double y, double width, double heigh
 	invalidateRect(a->hwnd, &r, FALSE);
 }
 
+void uiAreaSetPosition(uiArea *a, int x, int y)
+{
+}
+
 void uiAreaScrollTo(uiArea *a, double x, double y, double width, double height)
 {
 	// TODO

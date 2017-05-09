@@ -318,3 +318,15 @@ uiBox *uiNewVerticalBox(void)
 {
 	return finishNewBox(1);
 }
+
+void uiBoxSetSize(uiBox *b, int width, int height)
+{
+}
+
+void uiBoxSetPosition(uiBox *b, int x, int y)
+{
+}
+
+void uiBoxSetShadow(uiBox *box, int x, int y, double r, double g, double b, double a, double radius)
+{
+}
