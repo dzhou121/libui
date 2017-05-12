@@ -6,8 +6,6 @@ static HRESULT doPaint(uiArea *a, ID2D1RenderTarget *rt, RECT *clip)
 {
 	uiAreaHandler *ah = a->ah;
 	uiAreaDrawParams dp;
-	COLORREF bgcolorref;
-	D2D1_COLOR_F bgcolor;
 	D2D1_MATRIX_3X2_F scrollTransform;
 
 	// no need to save or restore the graphics state to reset transformations;  it's handled by resetTarget() in draw.c, called during the following
@@ -40,15 +38,15 @@ static HRESULT doPaint(uiArea *a, ID2D1RenderTarget *rt, RECT *clip)
 
 	// TODO only clear the clip area
 	// TODO clear with actual background brush
-	bgcolorref = GetSysColor(COLOR_BTNFACE);
-	bgcolor.r = ((float) GetRValue(bgcolorref)) / 255.0;
+	// bgcolorref = GetSysColor(COLOR_BTNFACE);
+	// bgcolor.r = ((float) GetRValue(bgcolorref)) / 255.0;
 	// due to utter apathy on Microsoft's part, GetGValue() does not work with MSVC's Run-Time Error Checks
 	// it has not worked since 2008 and they have *never* fixed it
 	// TODO now that -RTCc has just been deprecated entirely, should we switch back?
-	bgcolor.g = ((float) ((BYTE) ((bgcolorref & 0xFF00) >> 8))) / 255.0;
-	bgcolor.b = ((float) GetBValue(bgcolorref)) / 255.0;
-	bgcolor.a = 1.0;
-	rt->Clear(&bgcolor);
+	// bgcolor.g = ((float) ((BYTE) ((bgcolorref & 0xFF00) >> 8))) / 255.0;
+	// bgcolor.b = ((float) GetBValue(bgcolorref)) / 255.0;
+	// bgcolor.a = 1.0;
+	// rt->Clear(&bgcolor);
 
 	(*(ah->Draw))(ah, a, &dp);
 
