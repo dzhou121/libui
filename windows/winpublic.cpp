@@ -25,13 +25,7 @@ void uiWindowsEnsureAssignControlIDZOrder(HWND hwnd, LONG_PTR *controlID, HWND *
 
 void uiWindowsEnsureMoveWindowDuringResize(HWND hwnd, int x, int y, int width, int height)
 {
-	RECT r;
-
-	r.left = x;
-	r.top = y;
-	r.right = x + width;
-	r.bottom = y + height;
-	if (SetWindowPos(hwnd, NULL, r.left, r.top, r.right - r.left, r.bottom - r.top, SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOZORDER) == 0)
+	if (SetWindowPos(hwnd, NULL, x, y, width, height, SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOZORDER) == 0)
 		logLastError(L"error moving window");
 }
 

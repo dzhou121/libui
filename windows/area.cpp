@@ -84,15 +84,32 @@ void unregisterArea(void)
 
 void uiAreaSetSize(uiArea *a, int width, int height)
 {
-	a->scrollWidth = width;
-	a->scrollHeight = height;
-	areaUpdateScroll(a);
+    a->width = width;
+    a->height = height;
+    uiWindowsEnsureMoveWindowDuringResize(a->hwnd, a->x, a->y, a->width, a->height);
 }
 
 void uiAreaQueueRedrawAll(uiArea *a)
 {
 	// don't erase the background; we do that ourselves in doPaint()
 	invalidateRect(a->hwnd, NULL, FALSE);
+}
+
+void uiAreaQueueRedraw(uiArea *a, double x, double y, double width, double height)
+{
+	RECT r;
+    r.left = x;
+    r.top = y;
+    r.right = x + width;
+    r.bottom = y + height;
+	invalidateRect(a->hwnd, &r, FALSE);
+}
+
+void uiAreaSetPosition(uiArea *a, int x, int y)
+{
+    a->x = x;
+    a->y = y;
+    uiWindowsEnsureMoveWindowDuringResize(a->hwnd, a->x, a->y, a->width, a->height);
 }
 
 void uiAreaScrollTo(uiArea *a, double x, double y, double width, double height)

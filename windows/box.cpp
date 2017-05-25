@@ -14,6 +14,10 @@ struct uiBox {
 	std::vector<struct boxChild> *controls;
 	int vertical;
 	int padded;
+    int x;
+    int y;
+    int width;
+    int height;
 };
 
 static void boxPadding(uiBox *b, int *xpadding, int *ypadding)
@@ -30,6 +34,7 @@ static void boxPadding(uiBox *b, int *xpadding, int *ypadding)
 
 static void boxRelayout(uiBox *b)
 {
+    return;
 	RECT r;
 	int x, y, width, height;
 	int xpadding, ypadding;
@@ -240,7 +245,7 @@ uiWindowsControlDefaultAssignControlIDZOrder(uiBox)
 static void uiBoxChildVisibilityChanged(uiWindowsControl *c)
 {
 	// TODO eliminate the redundancy
-	uiWindowsControlMinimumSizeChanged(c);
+	//uiWindowsControlMinimumSizeChanged(c);
 }
 
 static void boxArrangeChildren(uiBox *b)
@@ -264,7 +269,7 @@ void uiBoxAppend(uiBox *b, uiControl *c, int stretchy)
 	uiWindowsControlSetParentHWND(uiWindowsControl(bc.c), b->hwnd);
 	b->controls->push_back(bc);
 	boxArrangeChildren(b);
-	uiWindowsControlMinimumSizeChanged(uiWindowsControl(b));
+	//uiWindowsControlMinimumSizeChanged(uiWindowsControl(b));
 }
 
 void uiBoxDelete(uiBox *b, int index)
@@ -276,7 +281,7 @@ void uiBoxDelete(uiBox *b, int index)
 	uiWindowsControlSetParentHWND(uiWindowsControl(c), NULL);
 	b->controls->erase(b->controls->begin() + index);
 	boxArrangeChildren(b);
-	uiWindowsControlMinimumSizeChanged(uiWindowsControl(b));
+	//uiWindowsControlMinimumSizeChanged(uiWindowsControl(b));
 }
 
 int uiBoxPadded(uiBox *b)
@@ -287,7 +292,7 @@ int uiBoxPadded(uiBox *b)
 void uiBoxSetPadded(uiBox *b, int padded)
 {
 	b->padded = padded;
-	uiWindowsControlMinimumSizeChanged(uiWindowsControl(b));
+	//uiWindowsControlMinimumSizeChanged(uiWindowsControl(b));
 }
 
 static void onResize(uiWindowsControl *c)
@@ -317,4 +322,22 @@ uiBox *uiNewHorizontalBox(void)
 uiBox *uiNewVerticalBox(void)
 {
 	return finishNewBox(1);
+}
+
+void uiBoxSetSize(uiBox *b, int width, int height)
+{
+    b->width = width;
+    b->height = height;
+    uiWindowsEnsureMoveWindowDuringResize(b->hwnd, b->x, b->y, b->width, b->height);
+}
+
+void uiBoxSetPosition(uiBox *b, int x, int y)
+{
+    b->x = x;
+    b->y = y;
+    uiWindowsEnsureMoveWindowDuringResize(b->hwnd, b->x, b->y, b->width, b->height);
+}
+
+void uiBoxSetShadow(uiBox *box, int x, int y, double r, double g, double b, double a, double radius)
+{
 }
