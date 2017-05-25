@@ -1,4 +1,3 @@
-// 4 september 2015
 #include "uipriv_unix.h"
 
 // notes:
@@ -384,6 +383,7 @@ static int areaKeyEvent(uiArea *a, int up, GdkEventKey *e)
 	guint state;
 	int i;
 
+	gchar *keyname = gdk_keyval_name(e->keyval);
 	ke.Key = 0;
 	ke.ExtKey = 0;
 	ke.Modifier = 0;
@@ -414,9 +414,18 @@ static int areaKeyEvent(uiArea *a, int up, GdkEventKey *e)
 	return 0;
 
 keyFound:
-    if (ke.Modifiers & uiModifierShift > 0) {
-	    ke.Key = e->string[0];
-    }
+//    if ((ke.Modifiers & uiModifierShift) > 0) {
+//	    ke.Key = e->string[0];
+//    }
+//    if (ke.Modifiers == 0) {
+//	    ke.Key = e->string[0];
+//    }
+	    if (strlen(keyname) == 1) {
+	        ke.Key = keyname[0];
+	    } else {
+		ke.Key = e->string[0];
+	    }
+	
 	return (*(a->ah->KeyEvent))(a->ah, a, &ke);
 }
 
